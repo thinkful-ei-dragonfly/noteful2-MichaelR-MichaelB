@@ -1,13 +1,13 @@
 import React from 'react';
 import './Sidebar.css'
 
-import STORE from './dummy-store';
+import STORE from '../dummy-store';
 
-import Folder from './Folder';
+import Folder from '../Folder/Folder';
 
 function Sidebar(props) {
   const folders = STORE.folders.map(folder => {
-    return <Folder key={folder.id} id={folder.id} name={folder.name}/>
+    return <Folder key={folder.id} id={folder.id} name={folder.name} update={props.updateCurrentFolder} />
   })
 
   return (

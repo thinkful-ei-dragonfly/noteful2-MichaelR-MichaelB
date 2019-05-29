@@ -3,7 +3,7 @@ import './Folder.css';
 
 function Folder(props) {
   return (
-    <div className="Folder" id={props.id}>{props.name}</div>
+    <div className="Folder" onClick={() => props.update(props.id)} id={props.id}>{props.name} </div>
   )
 }
 

@@ -3,7 +3,7 @@ import './Note.css';
 import { withRouter } from 'react-router-dom';
 
 function Note(props) {
-  console.log(props.history);
+  
   return (
     <div className="Note" id={props.id}>
       <h2>{props.name}</h2>
