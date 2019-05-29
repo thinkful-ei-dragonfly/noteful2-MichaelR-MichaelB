@@ -1,0 +1,7 @@
+.Folder {
+  height: 100px;
+  width: 100%;
+  padding: 10px auto;
+  border: 1px solid black;
+  box-sizing: border-box;
+}
