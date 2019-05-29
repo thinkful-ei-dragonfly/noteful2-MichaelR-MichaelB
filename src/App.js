@@ -1,42 +1,73 @@
 import React from 'react';
 import './App.css';
-import { Route, withRouter} from 'react-router-dom'
+import { withRouter} from 'react-router-dom'
 import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import NoteList from './NoteList/NoteList';
+// import NoteContent from './NoteContent/NoteContent';
 
 
 class App extends React.Component {
   state = {
-    currentFolder: 'b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1'
+    currentFolder: '',
+    currentNote: '',
+    noteContent: ''
   }
-
 
   updateCurrentFolder = (id) => {
-    this.setState({
-      currentFolder: id, 
-      
-    })
-    if (id === '') {
-      this.props.history.push('/')
+    if (id === 'back') {
+      if (this.state.currentFolder) {
+        this.props.history.push(`/folder/${this.state.currentFolder}`);
+      } else {
+        this.props.history.push('/')
+      }
+      this.setState({
+        currentNote: '',
+        noteContent: ''
+      })
     } else {
-      this.props.history.push(`/folder/${id}`)
+      if (id === this.state.currentFolder) {
+        console.log('Go home');
+        this.props.history.push('/')
+        this.setState({
+          currentFolder: '',
+          currentNote: '',
+          noteContent: ''
+        })
+      } else {
+        this.setState({
+          currentFolder: id,
+          currentNote: '',
+          noteContent: ''
+        })
+      }
+      if (id === '') {
+        this.props.history.push('/')
+      } else {
+        this.props.history.push(`/folder/${id}`)
+      }
     }
-    
   }
 
-
+  updateCurrentNote = (id, content) => {
+    this.setState({
+      currentNote: id,
+      noteContent: content
+    })
+    this.props.history.push(`/note/${id}`)
+  }
   
   
   render() {
+    console.log(this.state);
     return (
       <div className="App">
         <header className="App-header">
           <Header updateCurrentFolder={this.updateCurrentFolder} />
         </header>
         <main>
-          <Sidebar updateCurrentFolder={this.updateCurrentFolder}/>
-          <NoteList currentFolder={this.state.currentFolder}/>
+          <Sidebar currentFolder={this.state.currentFolder} updateCurrentFolder={this.updateCurrentFolder}/>
+          <NoteList updateCurrentNote={this.updateCurrentNote} currentFolder={this.state.currentFolder} currentNote={this.state.currentNote} content={this.state.noteContent}/>
         </main>
       </div>
     );

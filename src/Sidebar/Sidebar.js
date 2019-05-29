@@ -1,19 +1,30 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import './Sidebar.css'
 
-import STORE from '../dummy-store';
-
-import Folder from '../Folder/Folder';
+import FolderList from '../FolderList/FolderList';
 
 function Sidebar(props) {
-  const folders = STORE.folders.map(folder => {
-    return <Folder key={folder.id} id={folder.id} name={folder.name} update={props.updateCurrentFolder} />
-  })
-
   return (
     <div className="Sidebar">
-      {folders}
-      <button className="add-button">Add folder</button>
+      <Switch>
+      <Route
+          path="/note"
+          component={() => {
+            return (
+              <div>
+                <button
+                  className="add-button"
+                  onClick={() => props.updateCurrentFolder('back')}>Go back</button>
+              </div>
+            )
+          }}
+          />
+        <Route
+          path="/"
+          render={() => <FolderList currentFolder={props.currentFolder} updateCurrentFolder={props.updateCurrentFolder}/>}
+        />
+      </Switch>
     </div>
   )
 }

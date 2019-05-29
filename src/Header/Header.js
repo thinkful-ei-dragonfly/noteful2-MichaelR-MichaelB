@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, withRouter} from 'react-router-dom'
+import { withRouter} from 'react-router-dom'
 import './Header.css';
 
 function Header(props) {
