@@ -14,19 +14,19 @@ class NoteList extends React.Component {
   // static contextType = FolderContext;
 
   getNotes = (arr) => {
-    console.log(this.context);
+    // console.log(this.context);
     const notes = arr.map(note => {
       if (this.props.currentFolder && this.props.currentNote && note.id === this.props.currentNote) {
-        return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={this.props.updateCurrentNote}/>
+        return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={this.props.updateCurrentNote} deleteNote={this.props.deleteNote} />
       } else if (this.props.currentFolder && this.props.currentNote && note.id !== this.props.currentNote) {
         return '';
       } else if (this.props.currentFolder && note.folderId === this.props.currentFolder) {
-        return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={this.props.updateCurrentNote}/>
+        return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={this.props.updateCurrentNote} deleteNote={this.props.deleteNote} />
       } else if (this.props.currentNote && note.id === this.props.currentNote) {
-        return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={this.props.updateCurrentNote}/>
+        return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={this.props.updateCurrentNote} deleteNote={this.props.deleteNote} />
       } else if (this.props.currentFolder === '' && this.props.currentNote === '') {
-        console.log('no folder id, no note id');
-        return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={this.props.updateCurrentNote}/>
+        // console.log('no folder id, no note id');
+        return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={this.props.updateCurrentNote} deleteNote={this.props.deleteNote} />
       }
       return '';
     })
@@ -37,7 +37,7 @@ class NoteList extends React.Component {
     return (
       <FolderContext.Consumer>
         {({notes}) => {
-          console.log(notes);
+          // console.log(notes);
           return (
           <div className="NoteList">
             {this.getNotes(notes)}

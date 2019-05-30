@@ -28,6 +28,17 @@ class App extends React.Component {
       })
   }
 
+  deleteNote = (noteId) => {
+    fetch(`${BASE_URL}/notes/${noteId}`, { method: 'DELETE', headers: { 'content-type': 'application/json' }})
+    this.setState({
+      notes: this.state.notes.filter(note => note.id !== noteId),
+      currentFolder: '',
+      currentNote: '',
+      noteContent: ''
+    })
+    this.props.history.push('/')
+  }
+
   updateCurrentFolder = (id) => {
     if (id === 'back') {
       if (this.state.currentFolder) {
@@ -73,7 +84,7 @@ class App extends React.Component {
   
   
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
       <FolderContext.Provider value={{
         folders: this.state.folders,
@@ -95,6 +106,7 @@ class App extends React.Component {
               currentFolder={this.state.currentFolder}
               currentNote={this.state.currentNote}
               content={this.state.noteContent}
+              deleteNote={this.deleteNote}
               />
           </main>
         </div>

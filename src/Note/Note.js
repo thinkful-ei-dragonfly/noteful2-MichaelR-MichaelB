@@ -8,7 +8,7 @@ function Note(props) {
     <div className="Note" id={props.id}>
       <h2 onClick={() => props.updateCurrentNote(props.id, props.content)}>{props.name}</h2>
       <p>{props.modified}</p>
-      <button>Delete Note</button>
+      <button onClick={() => props.deleteNote(props.id)}>Delete Note</button>
     </div>
   )
 }
