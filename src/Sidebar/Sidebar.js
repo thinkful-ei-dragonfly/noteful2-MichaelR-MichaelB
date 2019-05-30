@@ -15,14 +15,24 @@ function Sidebar(props) {
               <div>
                 <button
                   className="add-button"
-                  onClick={() => props.updateCurrentFolder('back')}>Go back</button>
+                  onClick={() => props.updateCurrentFolder('back')
+                }>
+                  Go back
+                </button>
               </div>
             )
           }}
           />
         <Route
           path="/"
-          render={() => <FolderList currentFolder={props.currentFolder} updateCurrentFolder={props.updateCurrentFolder}/>}
+          render={() => {
+            return (
+              <FolderList
+                currentFolder={props.currentFolder}
+                updateCurrentFolder={props.updateCurrentFolder}
+              />
+            )
+          }}
         />
       </Switch>
     </div>

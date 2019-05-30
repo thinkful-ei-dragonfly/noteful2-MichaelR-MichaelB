@@ -6,7 +6,15 @@ import Folder from '../Folder/Folder';
 
 function Sidebar(props) {
   const folders = STORE.folders.map(folder => {
-    return <Folder key={folder.id} id={folder.id} name={folder.name} update={props.updateCurrentFolder} currentFolder={props.currentFolder}/>
+    return (
+      <Folder
+        key={folder.id}
+        id={folder.id}
+        name={folder.name}
+        update={props.updateCurrentFolder}
+        currentFolder={props.currentFolder}
+      />
+    )
   })
 
   return (

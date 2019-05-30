@@ -7,7 +7,13 @@ function Folder(props) {
     fileClass += ' selected'
   }
   return (
-    <div className={fileClass} onClick={() => props.update(props.id)} id={props.id}>{props.name} </div>
+    <div
+      className={fileClass}
+      onClick={() => props.update(props.id)}
+      id={props.id}
+    >
+      {props.name}
+    </div>
   )
 }
 

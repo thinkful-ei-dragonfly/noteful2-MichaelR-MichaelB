@@ -63,11 +63,21 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <Header updateCurrentFolder={this.updateCurrentFolder} />
+          <Header
+            updateCurrentFolder={this.updateCurrentFolder}
+          />
         </header>
         <main>
-          <Sidebar currentFolder={this.state.currentFolder} updateCurrentFolder={this.updateCurrentFolder}/>
-          <NoteList updateCurrentNote={this.updateCurrentNote} currentFolder={this.state.currentFolder} currentNote={this.state.currentNote} content={this.state.noteContent}/>
+          <Sidebar
+            currentFolder={this.state.currentFolder}
+            updateCurrentFolder={this.updateCurrentFolder}
+          />
+          <NoteList
+            updateCurrentNote={this.updateCurrentNote}
+            currentFolder={this.state.currentFolder}
+            currentNote={this.state.currentNote}
+            content={this.state.noteContent}
+          />
         </main>
       </div>
     );
