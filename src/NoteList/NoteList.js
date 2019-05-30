@@ -8,37 +8,54 @@ import Note from '../Note/Note';
 import NoteContent from '../NoteContent/NoteContent';
 import AddButton from '../AddButton/AddButton';
 
-function NoteList(props) {
-  const notes = STORE.notes.map(note => {
-    if (props.currentFolder && props.currentNote && note.id === props.currentNote) {
-      return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={props.updateCurrentNote}/>
-    } else if (props.currentFolder && props.currentNote && note.id !== props.currentNote) {
-      return '';
-    } else if (props.currentFolder && note.folderId === props.currentFolder) {
-      return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={props.updateCurrentNote}/>
-    } else if (props.currentNote && note.id === props.currentNote) {
-      return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={props.updateCurrentNote}/>
-    } else if (props.currentFolder === '' && props.currentNote === '') {
-      return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={props.updateCurrentNote}/>
-    }
-    return '';
-  })
+import FolderContext from '../FolderContext';
 
-  return (
-    <div className="NoteList">
-      {notes}
-      <Switch>
-        <Route
-          path="/note"
-          render={() => <NoteContent content={props.content}/>}
-          />
-        <Route
-          path="/"
-          component={AddButton}
-        />
-      </Switch>
-    </div>
-  )
+class NoteList extends React.Component {
+  // static contextType = FolderContext;
+
+  getNotes = (arr) => {
+    console.log(this.context);
+    const notes = arr.map(note => {
+      if (this.props.currentFolder && this.props.currentNote && note.id === this.props.currentNote) {
+        return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={this.props.updateCurrentNote}/>
+      } else if (this.props.currentFolder && this.props.currentNote && note.id !== this.props.currentNote) {
+        return '';
+      } else if (this.props.currentFolder && note.folderId === this.props.currentFolder) {
+        return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={this.props.updateCurrentNote}/>
+      } else if (this.props.currentNote && note.id === this.props.currentNote) {
+        return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={this.props.updateCurrentNote}/>
+      } else if (this.props.currentFolder === '' && this.props.currentNote === '') {
+        console.log('no folder id, no note id');
+        return <Note key={note.id} id={note.id} name={note.name} modified={note.modified} folderId={note.folderId} content={note.content} updateCurrentNote={this.props.updateCurrentNote}/>
+      }
+      return '';
+    })
+    return  notes
+  }
+
+  render() {
+    return (
+      <FolderContext.Consumer>
+        {({notes}) => {
+          console.log(notes);
+          return (
+          <div className="NoteList">
+            {this.getNotes(notes)}
+            <Switch>
+              <Route
+                path="/note"
+                render={() => <NoteContent content={this.props.content}/>}
+                />
+              <Route
+                path="/"
+                component={AddButton}
+                />
+            </Switch>
+          </div>
+        )}}
+      </FolderContext.Consumer>
+    )
+  }
 }
 
 export default withRouter(NoteList);

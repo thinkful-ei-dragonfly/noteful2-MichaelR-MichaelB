@@ -4,14 +4,28 @@ import { withRouter} from 'react-router-dom'
 import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import NoteList from './NoteList/NoteList';
-// import NoteContent from './NoteContent/NoteContent';
+import FolderContext from './FolderContext';
 
+const BASE_URL = 'http://localhost:9090';
 
 class App extends React.Component {
   state = {
+    folders: [],
+    notes: [],
     currentFolder: '',
     currentNote: '',
     noteContent: ''
+  }
+
+  componentDidMount() {
+    fetch(`${BASE_URL}/db`)
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          folders: res.folders,
+          notes: res.notes,
+        })
+      })
   }
 
   updateCurrentFolder = (id) => {
@@ -61,25 +75,30 @@ class App extends React.Component {
   render() {
     console.log(this.state);
     return (
-      <div className="App">
-        <header className="App-header">
-          <Header
-            updateCurrentFolder={this.updateCurrentFolder}
-          />
-        </header>
-        <main>
-          <Sidebar
-            currentFolder={this.state.currentFolder}
-            updateCurrentFolder={this.updateCurrentFolder}
-          />
-          <NoteList
-            updateCurrentNote={this.updateCurrentNote}
-            currentFolder={this.state.currentFolder}
-            currentNote={this.state.currentNote}
-            content={this.state.noteContent}
-          />
-        </main>
-      </div>
+      <FolderContext.Provider value={{
+        folders: this.state.folders,
+        notes: this.state.notes
+      }}>
+        <div className="App">
+          <header className="App-header">
+            <Header
+              updateCurrentFolder={this.updateCurrentFolder}
+              />
+          </header>
+          <main>
+            <Sidebar
+              currentFolder={this.state.currentFolder}
+              updateCurrentFolder={this.updateCurrentFolder}
+              />
+            <NoteList
+              updateCurrentNote={this.updateCurrentNote}
+              currentFolder={this.state.currentFolder}
+              currentNote={this.state.currentNote}
+              content={this.state.noteContent}
+              />
+          </main>
+        </div>
+      </FolderContext.Provider>
     );
   }
 }
